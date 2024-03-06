@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>homepage</title>
+</head>
+<body>
+    <h1>Email Spam Classifier</h1>
+    <form method = "POST" action = "/predict">
+      <textarea name = 'content' placeholder ='Enter your email here' rows='15' cols='50'>{{email_text}} </textarea>
+      <div>
+        <button> Check Spam</button>
+         <a href="/" style="color: palevioletred;">Reset</a>
+      </div>
+    </form>
+    {% if predictions == 1 %}
+         <h2 style= 'color: green'; >SPAM</h2>
+    {% elif predictions == -1 %}
+         <h2 style= 'color: red'>NOT SPAM</h2>
+    {% endif %}
+   
+   <style>
+     body{
+       text-align:center;
+        color: palevioletred;
+       background-color: rgba(55, 55, 55, 1);
+
+     }
+     button{
+       background-color: palevioletred;
+       color: white;
+       border: none;
+       padding: 10px;
+     }
+     ::placeholder {
+     color: palevioletred;
+   </style>
+</body>
+</html>
