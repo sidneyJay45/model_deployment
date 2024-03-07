@@ -33,9 +33,12 @@ def predict():
 # we've created an api route
 @app.route('/api/predict', methods=['POST'])
 def api_predict():
-   data = request.get_json(force = True)
+   # Get JSON data from the request
+   data = request.get_json(force=True)
+
+   # Extract the email text from the JSON data
    email_text = data['content']
-   email_text = request.get_json(force=True)
+
    # Tokenize the email content
    tokenized_email = tokenizer.transform([email_text])
 
@@ -44,7 +47,9 @@ def api_predict():
 
    # Convert predictions to 1 or -1 based on the result
    predictions = 1 if predictions == 1 else -1
-   return jsonify ({predictions: predictions})
+
+   # Return predictions as JSON response
+   return jsonify({'predictions': predictions, 'email_text':email_text })
 
 
 if __name__ == '__main__':
