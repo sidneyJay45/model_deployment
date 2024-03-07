@@ -1,4 +1,4 @@
-from flask import Flask, render_template , request
+from flask import Flask, render_template , request , jsonify
 import pickle 
 
 tokenizer = pickle.load(open('models/cv.pkl', 'rb'))
@@ -29,6 +29,22 @@ def predict():
     return render_template('home.html', predictions=predictions, email_text=email_text)
 
 
+
+# we've created an api route
+@app.route('/api/predict', methods=['POST'])
+def api_predict():
+   data = request.get_json(force = True)
+   email_text = data['content']
+   email_text = request.get_json(force=True)
+   # Tokenize the email content
+   tokenized_email = tokenizer.transform([email_text])
+
+   # Make predictions using the model
+   predictions = model.predict(tokenized_email)
+
+   # Convert predictions to 1 or -1 based on the result
+   predictions = 1 if predictions == 1 else -1
+   return jsonify ({predictions: predictions})
 
 
 if __name__ == '__main__':
